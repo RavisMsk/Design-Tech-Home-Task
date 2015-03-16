@@ -1,0 +1,74 @@
+@(form: Form[Option[models.user.User]])
+
+@import views.html.common.main
+
+@main(title = "Авторизация") {
+    <nav class="top-bar" data-topbar role="navigation">
+        <ul class="title-area">
+            <li class="name">
+                <h1><a href="#">WebChair</a></h1>
+            </li>
+                <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+        </ul>
+
+        <section class="top-bar-section">
+                <!-- Right Nav Section -->
+            <ul class="right">
+                <li class="active"><a href="#">Кабинет преподавателя</a></li>
+                <li class="divider"></li>
+                <li class="has-dropdown not-click">
+                    <a href="#">Другие кабинеты</a>
+                    <ul class="dropdown">
+                        <li><a href="/student/signin">Студента</a></li>
+                        <li><a href="/admin/signin">Администратора</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+                <!-- Left Nav Section -->
+            <ul class="left">
+                <li class="divider"></li>
+                <li><a href="/">Главная</a></li>
+            </ul>
+        </section>
+    </nav>
+
+    <div class="remove-whitespace">
+        <div class="row">
+            <div class="large-6 columns auth-plain">
+                <div class="signup-panel left-solid">
+                    <p class="welcome">Зарегистрированные преподаватели:</p>
+                    <form id="signInForm" method="POST" action="/teachers/signin">
+                        <div class="row collapse">
+                            <div class="small-2  columns">
+                                <span class="prefix"><i class="fi-torso-female"></i></span>
+                            </div>
+                            <div class="small-10  columns">
+                                <input type="text" placeholder="E-mail" name="email">
+                            </div>
+                        </div>
+                        <div class="row collapse">
+                            <div class="small-2 columns ">
+                                <span class="prefix"><i class="fi-lock"></i></span>
+                            </div>
+                            <div class="small-10 columns ">
+                                <input type="password" placeholder="Пароль" name="password">
+                            </div>
+                        </div>
+                        <input type="submit" display="none" hidden="hidden">
+                    </form>
+                    <a href="#" class="button" onclick="document.forms['signInForm' ].submit()">Войти</a>
+                </div>
+            </div>
+
+            <div class="large-6 columns auth-plain">
+                <div class="signup-panel newusers">
+                    <p class="welcome"> Новый преподаватель?</p>
+                    <a href="#" class="button">Зарегистрироваться</a><br/>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}

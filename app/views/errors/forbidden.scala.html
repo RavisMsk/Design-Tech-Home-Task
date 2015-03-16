@@ -1,0 +1,11 @@
+@(text: Option[String] = None)
+
+@import views.html.common.main
+
+@main(title = "Нет доступа") {
+    <h2>У вас нет доступа для просмотра данной страницы.</h2>
+    @if(text.isDefined) {
+        <h3>@text</h3>
+    }
+    <a href="@routes.Application.index()">На главную</a>
+}

@@ -1,0 +1,132 @@
+@(user: models.user.User, teacher: models.teacher.Teacher)
+
+@import views.html.common.main
+@import models.teacher.{Grade, Job}
+@import helpers._
+
+@main(title = "Кабинет " + user.name) {
+
+  <nav class="top-bar" data-topbar>
+    <ul class="title-area">
+      <li class="name">
+        <h1>
+          <a href="#">
+            Личный кабинет преподавателя
+          </a>
+        </h1>
+      </li>
+    </ul>
+
+    <section class="top-bar-section">
+      <ul class="right">
+        <li class="not-click"><a href="/">Главная</a></li>
+        <li class="divider"></li>
+        <li class="not-click"><a href="/teachers/signout">Выйти</a></li>
+      </ul>
+    </section>
+  </nav>
+
+  <div class="row">
+    <div class="large-12 columns">
+      <div class="row">
+
+        <div class="large-6 columns">
+          <h6 class="panel"><a href="@user.uid/uploads">Перейти к вашим методическим материалам</a></h6>
+        </div>
+
+        <div class="large-6 columns">
+          <h6 class="panel"><a href="@user.uid/upload">Добавить методический материал</a></h6>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="large-12 columns">
+      <div class="row">
+
+        <div class="large-12 columns">
+          <div class="panel radius">
+
+            <h4>Ваш профиль:</h4><hr/>
+            <h5 class="subheader">
+              <form id="profileForm" method="POST" action="@routes.TeacherController.updateTeacher(user.uid.get)">
+                <div class="row">
+                  <div class="large-12 columns">
+                    <label>Имя:</label>
+                    <input type="text" name="name" value="@user.name">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="large-12 columns">
+                    <label>Должность:</label>
+                    <select name="job">
+                      @for(job <- Job.allValues){
+                        @if(job == teacher.job.toString){
+                          <option selected>@job</option>
+                        }else{
+                          <option>@job</option>
+                        }
+                      }
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="large-12 columns">
+                    <label>Степень:</label>
+                    <select name="grade">
+                      @for(grade <- Grade.allValues){
+                        @if(grade == teacher.grade.toString){
+                          <option selected>@grade</option>
+                        }else{
+                          <option>@grade</option>
+                        }
+                      }
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="large-12 columns">
+                    <label>E-mail:</label>
+                    <input disabled type="text" name="email" value="@user.email">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="large-12 columns">
+                    <label>Дата рождения:</label>
+                    <input type="date" name="dob" value="@user.dob">
+                  </div>
+                </div>
+              </form>
+              <a class="button" href="#" onclick="document.forms['profileForm'].submit()">Сохранить изменения</a>
+                @ButtonFactory.getFactory(ButtonType.warning).createLargeButton("Большая рыжая кнопка от абстрактной фабрики!")
+            </h5>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <footer class="row">
+    <div class="large-12 columns">
+      <hr>
+      <div class="row">
+        <div class="large-6 columns">
+          <p>© Copyright no one at all. Go to town.</p>
+        </div>
+        <div class="large-6 columns">
+          <ul class="inline-list right">
+            @*<li><a href="#">Link 4</a></li>*@
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+}

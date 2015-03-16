@@ -1,0 +1,55 @@
+@(users: List[models.user.User], currentUser: Option[models.user.User])
+
+@import views.html.common.main
+@import models.user.User
+
+@main(title = "Главная") {
+
+  <nav class="top-bar" data-topbar role="navigation">
+    <ul class="title-area">
+      <li class="name">
+        <h1><a href="#">WebChair</a></h1>
+      </li>
+        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+    </ul>
+
+    <section class="top-bar-section">
+      @if(currentUser.isDefined) {
+        <ul class="left">
+          <li class="active not-click">
+            <a href="@routes.TeacherController.teacher(currentUser.get.uid.get)">@currentUser.get.name</a>
+          </li>
+        </ul>
+      }
+
+      <ul class="right">
+        <li class="active"><a href="#">Главная</a></li>
+        <li class="divider"></li>
+        <li class="not-click"><a href="#">Методические материалы</a></li>
+        <li class="divider"></li>
+        @if(!currentUser.isDefined){
+          <li class="has-dropdown not-click">
+            <a href="#">Вход в личный кабинет</a>
+            <ul class="dropdown">
+              <li><a href="#">Студента</a></li>
+              <li><a href="/teachers/signin">Преподавателя</a></li>
+              <li><a href="#">Администратора</a></li>
+            </ul>
+          </li>
+        }
+      </ul>
+    </section>
+  </nav>
+
+  <h1>Все пользователи:</h1>
+  <ul>
+    @if(users.isEmpty) {
+      <h1>Нет пользователей</h1>
+    } else {
+      @for(u: User <- users) {
+        <li>@u.uid - @u.name - @u.email - @u.role</li>
+      }
+    }
+  </ul>
+}

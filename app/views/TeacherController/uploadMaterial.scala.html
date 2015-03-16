@@ -1,0 +1,77 @@
+@(
+        user: models.user.User,
+        disciplines: List[models.discipline.Discipline],
+        uploadForm: Form[models.upload.UploadData]
+        )
+
+@import views.html.common.main
+
+@main(title = "Загрузка материала") {
+
+    <nav class="top-bar" data-topbar>
+        <ul class="title-area">
+            <li class="name">
+                <h1>
+                    <a href="#">
+                        Личный кабинет преподавателя
+                    </a>
+                </h1>
+            </li>
+        </ul>
+
+        <section class="top-bar-section">
+            <ul class="left">
+                <li class="divider"></li>
+                <li class="not-click active"><a href="@routes.TeacherController.teacher(user.uid.get)">@user.name</a></li>
+            </ul>
+
+            <ul class="right">
+                <li class="not-click"><a href="@routes.Application.index">Главная</a></li>
+                <li class="divider"></li>
+                <li class="not-click"><a href="@routes.TeacherController.uploads(user.uid.get)">Ваши загрузки</a></li>
+                <li class="divider"></li>
+                <li class="not-click"><a href="@routes.AuthController.signOut">Выйти</a></li>
+            </ul>
+        </section>
+    </nav>
+
+    <section>
+        <div class="row">
+            <div class="large-12 columns">
+                <h2>Загрузить методический материал:</h2>
+                @helper.form(action = routes.TeacherController.performUpload(user.uid.get), 'enctype -> "multipart/form-data", 'id -> "uploadForm"){
+                        <div class="row">
+                            <div class="large-12 columns">
+                                <label>Название:</label>
+                                <input type="text" name="title">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-12 columns">
+                                <label>Авторы:</label>
+                                <input type="text" name="author">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-12 columns">
+                                <label>Дисциплина:</label>
+                                <select name="discipline">
+                                    @for(discipline <- disciplines){
+                                        <option value="@discipline.did">@discipline.title</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-12 columns">
+                                <label>Файл (архив, pdf, ...):</label>
+                                <input type="file" name="upload">
+                            </div>
+                        </div>
+                }
+                <a href="#" onclick="document.forms['uploadForm'].submit()" class="button">Загрузить</a>
+            </div>
+        </div>
+    </section>
+
+}

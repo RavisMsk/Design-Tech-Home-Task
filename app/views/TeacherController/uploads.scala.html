@@ -1,0 +1,73 @@
+@(user: models.user.User,
+        uploads: List[models.upload.Upload],
+        disciplines: List[models.discipline.Discipline])
+
+@import views.html.common.main
+
+@main(title = "Загрузки") {
+
+  <nav class="top-bar" data-topbar>
+    <ul class="title-area">
+      <li class="name">
+        <h1>
+          <a href="#">
+            Личный кабинет преподавателя
+          </a>
+        </h1>
+      </li>
+    </ul>
+
+    <section class="top-bar-section">
+      <ul class="left">
+        <li class="divider"></li>
+        <li class="not-click active"><a href="@routes.TeacherController.teacher(user.uid.get)">@user.name</a></li>
+      </ul>
+
+      <ul class="right">
+        <li class="not-click"><a href="@routes.Application.index">Главная</a></li>
+        <li class="divider"></li>
+        <li class="not-click"><a href="@routes.TeacherController.upload(user.uid.get)">Загрузить методический материал</a></li>
+        <li class="divider"></li>
+        <li class="not-click"><a href="@routes.AuthController.signOut">Выйти</a></li>
+      </ul>
+    </section>
+  </nav>
+
+  <section class="content">
+    <div class="large-12 columns">
+      @if(uploads.isEmpty){
+        <h3>Вы пока ничего не загрузили. <a href="@routes.TeacherController.upload(user.uid.get)">Перейти к загрузке</a></h3>
+        <br />
+      }
+      <table>
+        <thead>
+          <tr>
+            <th width="100">ID материала</th>
+            <th>Название</th>
+            <th>Авторы</th>
+            <th>Название файла</th>
+            <th>Ссылка для скачивания</th>
+            <th>Удалить</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(u <- uploads) {
+            <tr>
+              <td>@u.uid.get</td>
+              <td>@u.title</td>
+              <td>@u.author</td>
+              <td>@u.filename</td>
+              <td>
+                <a class="button small" href="#">Скопировать ссылку</a>
+              </td>
+              <td>
+                <a class="button warning small" onclick="deleteUploadWithId(@u.uid.get)">Удалить</a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+    <script src="/assets/javascripts/uploads.js"></script>
+}

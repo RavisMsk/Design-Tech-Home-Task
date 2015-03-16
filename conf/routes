@@ -1,0 +1,35 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+### Home page
+GET           /                            controllers.Application.index
+
+### Sign-in/out routes
+# Sign-in
+GET           /teachers/signin             controllers.AuthController.signIn
+POST          /teachers/signin             controllers.AuthController.authenticate
+# Sign-out through GET
+GET           /teachers/signout            controllers.AuthController.signOut
+
+### Sign-up route
+POST          /teachers/signup             controllers.AuthController.signUp
+
+### Teachers controller routes
+# Re-directs to exact signed-in teacher
+GET           /teachers                    controllers.TeacherController.index
+# Getting and updating teacher profile
+GET           /teachers/:id                controllers.TeacherController.teacher(id: Long)
+POST          /teachers/:id                controllers.TeacherController.updateTeacher(id: Long)
+# All uploads of exact teacher
+GET           /teachers/:id/uploads        controllers.TeacherController.uploads(id: Long)
+# Uploading material
+GET           /teachers/:id/upload         controllers.TeacherController.upload(id: Long)
+POST          /teachers/:id/upload         controllers.TeacherController.performUpload(id: Long)
+
+### Uploads routes
+# Deleting upload
+DELETE        /uploads/:id                 controllers.UploadController.deleteUploadWithId(id: Long)
+
+### Map static resources from the /public folder to the /assets URL path
+GET           /assets/*file                controllers.Assets.at(path="/public", file)
