@@ -31,5 +31,8 @@ POST          /teachers/:id/upload         controllers.TeacherController.perform
 # Deleting upload
 DELETE        /uploads/:id                 controllers.UploadController.deleteUploadWithId(id: Long)
 
+# Search route
+GET           /search                      controllers.SearchController.search(title: Option[String], disc: Option[String], fio: Option[String])
+
 ### Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                controllers.Assets.at(path="/public", file)

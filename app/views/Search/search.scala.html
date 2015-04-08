@@ -1,0 +1,62 @@
+@(results: List[models.db.SearchResult], title: String, disc: String, fio: String)
+
+@import views.html.common.main
+@import models.db.SearchResult
+
+@main(title = "Поиск по материалам") {
+
+    <nav class="top-bar" data-topbar role="navigation">
+        <ul class="title-area">
+            <li class="name">
+                <h1><a href="#">WebChair</a></h1>
+            </li>
+                <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+        </ul>
+
+        <section class="top-bar-section">
+
+
+            <ul class="right">
+                <li class="not-click"><a href="/">Главная</a></li>
+                <li class="divider"></li>
+                <li class="not-click"><a href="#">Методические материалы</a></li>
+                <li class="divider"></li>
+                <li class="active"><a href="#">Поиск</a></li>
+                <li class="divider"></li>
+                <li class="has-dropdown not-click">
+                    <a href="#">Вход в личный кабинет</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Студента</a></li>
+                        <li><a href="/teachers/signin">Преподавателя</a></li>
+                        <li><a href="#">Администратора</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </nav>
+
+    <h2>Поиск по материалам</h2>
+    <form method="GET" action="/search">
+        <fieldset>
+            <legend>Параметра запроса:</legend>
+            <label>Название материала
+                <input name="title" type="text" value="@title">
+            </label>
+            <label>Название дисциплины
+                <input name="disc" type="text" value="@disc">
+            </label>
+            <label>ФИО опубликовавшего
+                <input name="fio" type="text" value="@fio">
+            </label>
+            <input type="submit" value="Поискать">
+        </fieldset>
+    </form>
+
+    <h2>Результаты:</h2>
+    <ul>
+    @for(u: SearchResult <- results) {
+        <li>@u.title - @u.authors - @u.discipline - @u.publisher - @u.email</li>
+    }
+    </ul>
+}

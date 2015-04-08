@@ -15,8 +15,8 @@ class User(val uid: Option[Long], val name: String, val dob: java.util.Date, val
 
   override def toString = "User(%d, %s, %s, %s)".format(uid.getOrElse(0), name, email, password)
 
-  def Date2String(date: java.util.Date): String = "%d-%d-%d".format(date.getYear, date.getMonth, date.getDay)
-  def Date2SqlDate(date: java.util.Date): java.sql.Date = new java.sql.Date(date.getTime)
+  private def Date2String(date: java.util.Date): String = "%d-%d-%d".format(date.getYear, date.getMonth, date.getDay)
+  private def Date2SqlDate(date: java.util.Date): java.sql.Date = new java.sql.Date(date.getTime)
 
   def update(name: String = this.name, password: String = this.password, dob: java.util.Date = this.dob, email: String = this.email): Option[User] = {
     DB.withConnection {

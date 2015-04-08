@@ -15,4 +15,6 @@ libraryDependencies ++= Seq(
 
 libraryDependencies += "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
 
-unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
+unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
+
+fork in run := true
